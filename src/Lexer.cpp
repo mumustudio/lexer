@@ -5,10 +5,9 @@
 #include "../include/Real.h"
 #include "../EndException.h"
 
-int Lexer::line = 1;
-
-Lexer::Lexer() {
+Lexer::Lexer(fstream *file) {
     this->peek = ' ';
+    this->file=file;
     reserve(new Word("if", Tag::IF));
     reserve(new Word("else", Tag::ELSE));
     reserve(new Word("while", Tag::WHILE));
@@ -30,16 +29,19 @@ void Lexer::reserve(Word *w) {
     this->words[w->lexeme] = w;
 }
 
+// readch 字元判斷
 void Lexer::readch() {
     int ch;
-    ch = std::cin.get();
+    ch = file->get();
     if (ch != EOF) {
         this->peek = ch;
     } else {
         throw *(new EndException);
     }
+
 }
 
+// readch 字元判斷
 bool Lexer::readch(char c) {
     readch();
     if (this->peek != c) {
@@ -49,16 +51,18 @@ bool Lexer::readch(char c) {
     return true;
 }
 
+// scan 測資傳入
 Token Lexer::scan() {
+    // 排除不必要判斷字元
     for (;; readch()) {
-        if (this->peek == ' ' || this->peek == '\t') {
+        if (this->peek == ' ' || this->peek == '\t' || this->peek == '\r'||this->peek=='\n') {
             continue;
-        } else if (this->peek == '\n') {
-            Lexer::line = Lexer::line + 1;
-        } else {
+        }else{
             break;
         }
     }
+
+    // 判斷運算子
     switch (this->peek) {
         case '&':
             if (readch('&'))
@@ -92,6 +96,7 @@ Token Lexer::scan() {
                 return Token('>');
     }
 
+    // 判斷數字
     if (isdigit(this->peek)) {
         int v = 0;
         do {
@@ -115,6 +120,7 @@ Token Lexer::scan() {
         return Real(x);
     }
 
+    //判斷字母為 型態(int、float...)或是變數(ex:a、b、i、j...)
     if (isalpha(this->peek)) {
         string b = "";
         do {
@@ -131,6 +137,7 @@ Token Lexer::scan() {
         return *w;
     }
 
+    // 判斷標點符號(ex:{ 、[、;....)
     Token *tok = new Token(this->peek);
     this->peek = ' ';
     return *tok;

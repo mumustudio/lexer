@@ -13,6 +13,7 @@ Tag::~Tag()
     //dtor
 }
 
+// toString 回傳tag  !!若無對應tag回傳OTHER(之後要判斷)!!
 string Tag::toString(int tag) {
     switch (tag) {
         case Tag::AND:

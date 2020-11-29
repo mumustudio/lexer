@@ -12,6 +12,7 @@ Num::~Num()
     //dtor
 }
 
+// toString 回傳字串
 string Num::toString() {
     return std::to_string(this->value);
 }

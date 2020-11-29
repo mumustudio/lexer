@@ -14,6 +14,7 @@ Word::~Word()
     //dtor
 }
 
+// 初始化 各運算子所對應tag
 Word *Word::w_and = new Word("&&",Tag::AND);
 Word *Word::w_or = new Word("||", Tag::OR);
 Word *Word::w_eq = new Word("==", Tag::EQ);
@@ -25,6 +26,7 @@ Word *Word::w_True = new Word("true", Tag::TRUE);
 Word *Word::w_False = new Word("false", Tag::FALSE);
 Word *Word::w_temp = new Word("t", Tag::TEMP);
 
+// toString 回傳字串
 string Word::toString(){
     return this->lexeme;
 }

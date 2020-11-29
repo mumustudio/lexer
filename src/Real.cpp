@@ -12,6 +12,7 @@ Real::~Real()
     //dtor
 }
 
+// toString 回傳字串
 string Real::toString() {
     return std::to_string(this->value);
 }

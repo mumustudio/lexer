@@ -4,8 +4,22 @@
 
 using namespace std;
 
-int main() {
-    Lexer *lexer = new Lexer();
+int main(int argc,char *argv[]) {
+    if(argc<2){
+        cout<<"please type at least one argument..."<<endl;
+        return 1;
+    }
+    string filename=argv[1];
+
+    fstream file;
+    file.open(filename, ios::in);
+
+    if (!file.is_open()) {
+        cout << "file is not open" << endl;
+        return 1;
+    }
+
+    Lexer *lexer = new Lexer(&file);
 
     try {
         while (true) {

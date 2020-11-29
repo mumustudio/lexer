@@ -11,11 +11,10 @@ using namespace std;
 
 class Lexer {
 public:
-    static int line;
     char peek;
     map<string, Word *> words;
-
-    Lexer();
+    fstream *file;  //讀取的檔案
+    Lexer(fstream *file);
 
     virtual ~Lexer();
 

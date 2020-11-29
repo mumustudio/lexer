@@ -17,10 +17,13 @@ Token::~Token() {
     //dtor
 }
 
+// toString 實際Token字串
 string Token::toString() {
     Tag tag = *(new Tag());
     string tagStr = tag.toString(this->tag);
     string inputStr = this->lex;
+
+    //判斷tag 如果不屬於任何tag
     if (tagStr == "OTHER") {
         tagStr = (char) this->tag;
         inputStr = (char) this->tag;
@@ -29,6 +32,5 @@ string Token::toString() {
     char buf[30];
     std::snprintf(buf, 30, "Token: %-10s(%s)", inputStr.c_str(), tagStr.c_str());
     string tokenStr(buf);
-//    string tokenStr = std::sprintf("Token:" + inputStr+ "\t\t(" + tagStr+")");
     return tokenStr;
 }
